@@ -1,1 +1,40 @@
-Hello Sweet Family
+<html>
+<head>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<body>
+<div id="example">
+  <form action="javascript:void(0);">
+  <button v-on:click="dosomething">OPEN</button>
+  </form>
+</div>
+
+<script>
+var places = ['World', 'America', 'Europe', 'Asia']
+var object = {
+  message: 'Hello world!',
+  counter: 0
+}
+new Vue({
+  el: '#example',
+  data: object,
+  methods: {
+    dosomething: function (event) {
+        const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ title: "Vue POST Request Example" })
+  };
+  fetch("http://localhost:3000/handler", requestOptions)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+    });
+    }
+  }
+})
+</script>
+</body>
+
+</html>
