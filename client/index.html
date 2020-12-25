@@ -26,7 +26,7 @@ new Vue({
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ title: "Vue POST Request Example" })
   };
-  fetch("http://localhost:3000/handler", requestOptions)
+  fetch("http://192.168.1.123:3000/handler", requestOptions)
     .then(response => response.json())
     .then(data => {
         console.log(data)
