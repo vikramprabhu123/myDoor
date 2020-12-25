@@ -93,7 +93,7 @@ export class MyQHandler {
 
             const setDoorStateResult = await account.setDoorState(
                 door.serial_number,
-                MyQ.actions.door.CLOSE
+                MyQ.actions.door.OPEN
               );
               console.log('setDoorStateResult:');
               console.log(JSON.stringify(setDoorStateResult, null, 2));

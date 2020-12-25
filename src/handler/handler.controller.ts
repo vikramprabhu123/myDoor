@@ -8,7 +8,7 @@ export class HandlerController {
     
     @Get()
     getStatus(){
-        console.log("--getStatus--");
+        console.log("--getStatus checking--");
         return this.handlerService.getStatus();
     }
 
