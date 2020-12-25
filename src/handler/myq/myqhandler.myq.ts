@@ -1,9 +1,11 @@
 import { InternalServerErrorException } from "@nestjs/common";
+import * as config from "config";
 // import * as MyQ from "myq-api";
 const MyQ = require('myq-api');
 
-const EMAIL = '';
-const PASSWORD = '';
+const loginaccount = config.get('account');
+const EMAIL = loginaccount.login;
+const PASSWORD = loginaccount.password;
 
 export class MyQHandler {
 
