@@ -1,9 +1,7 @@
 <template>
   <div class="card">
     
-    <button class="action">{{msg}}</button>
-
-    <h3>Door is closed</h3>
+    <h4>Door is closed</h4>
     
   </div>
 </template>
@@ -32,9 +30,9 @@ export default {
   background-color: lightgreen;
 }
 
-h3 {
+h4 {
   margin: 10px 0 0;
-  padding-top: 30px;
+  padding-top: 70px;
 }
 ul {
   list-style-type: none;

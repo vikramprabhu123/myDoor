@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="garageImgContainer">
-      <img alt="Vue logo" class="garageImg" src="./assets/garagedoor.png">
+      <img alt="Vue logo" class="garageImg" src="./assets/garagedoor-open.png">
     </div>
     <HelloWorld msg="Open"/>
   </div>
@@ -36,6 +36,6 @@ export default {
 .garageImg{
   height: 90%;
   width: 90%;
-  opacity: 0.5;
+  /* opacity: 0.5; */
 }
 </style>
