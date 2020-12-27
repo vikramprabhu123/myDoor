@@ -12,4 +12,8 @@ export class HandlerService {
         return this.myQHandler.openDoor();
     }
 
+    async closeDoor(){
+        return this.myQHandler.closeDoor();
+    }
+
 }
