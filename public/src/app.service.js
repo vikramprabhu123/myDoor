@@ -52,7 +52,7 @@ const appService = {
 
         setTimeout(() => {
             this.getDoorStatus();
-        }, 15000);
+        }, 25000);
 
         return response.data;
     },
