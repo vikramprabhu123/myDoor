@@ -12,7 +12,7 @@
     <form @submit.prevent="onSubmit">
         <div class="form-control">
             <!-- <label for="password">Enter your Code</label> -->
-            <input type="tel" placeholder="    ENTER YOUR CODE" v-model="password"/>
+            <input type="tel" placeholder="    ENTER YOUR CODE" v-model="password" v-bind:class="{ inputerror: inputerror }"/>
         </div>
         <div>
             <button type="submit" class="submit-btn">Submit</button>
@@ -29,7 +29,8 @@ import appService from "../app.service.js";
 export default {
     data(){
         return{
-            password: ''
+            password: '',
+            inputerror: false
         }
     },
     computed: {
@@ -42,6 +43,7 @@ export default {
             .then((res) => console.log("Login: Success ", res))
             .catch((err) => {
                 console.log("Login: Failed ", err);
+                this.inputerror = true;
             });
 
         }
@@ -83,6 +85,11 @@ input[type=submit] {
 
 input[type=submit]:hover {
   background-color: #45a049;
+}
+
+.inputerror{
+    border-block-color: red;
+    background-color: lightsalmon;
 }
 .submit-btn{
     width: 90%;

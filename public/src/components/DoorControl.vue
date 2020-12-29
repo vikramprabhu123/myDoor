@@ -1,5 +1,6 @@
 <template>
     <div v-show="isLoggedIn" >
+        <br><br><br><br>
         <div v-on:click="onDoorOpen()" v-show="doorstatus == 'CLOSED'">
             <i class="fas fa-door-closed fa-5x icon-door-closed" ></i>
             <h3>CLOSED</h3>
