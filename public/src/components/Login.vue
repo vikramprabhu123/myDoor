@@ -7,6 +7,7 @@
 <section class="section-locked">
     <!-- <i class="fas fa-camera fa-5x icon-locked"></i> -->
     <!-- <i class="fas fa-sign-in-alt fa-5x icon-locked"></i> -->
+    <br><br><br><br>
     <i class="fas fa-lock fa-3x icon-locked"></i>
     <form @submit.prevent="onSubmit">
         <div class="form-control">
