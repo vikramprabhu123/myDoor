@@ -1,4 +1,4 @@
-import { InternalServerErrorException } from "@nestjs/common";
+import { InternalServerErrorException, Logger } from "@nestjs/common";
 import * as config from "config";
 // import * as MyQ from "myq-api";
 const MyQ = require('myq-api');
@@ -8,29 +8,28 @@ const EMAIL = loginaccount.login;
 const PASSWORD = loginaccount.password;
 
 export class MyQHandler {
-
+    private logger = new Logger('MyQHandler');
     async getStatus() {
         const account = new MyQ();
 
         try {
-            console.log('Logging in.');
+            this.logger.log('getStatus');
+            this.logger.log(`Log-in with a/c: ${EMAIL}`);
             const loginResult = await account.login(EMAIL, PASSWORD);
-            console.log('Login result:');
-            console.log(JSON.stringify(loginResult, null, 2));
-            console.log(`Short-lived security token: '${loginResult.securityToken}'`);
+            this.logger.log(`Log-in Result: ${JSON.stringify(loginResult, null, 2)}`);
+            this.logger.log(`WT Token: ${loginResult.securityToken}`);
 
-            console.log(`\nGetting all devices on account`);
+            this.logger.log(`Getting Devices List`);
             const getDevicesResult = await account.getDevices();
-            console.log('getDevices result:');
-            console.log(JSON.stringify(getDevicesResult, null, 2));
+            // this.logger.log(`getDevices:  ${JSON.stringify(getDevicesResult, null, 2)}`);
 
             const { devices } = getDevicesResult;
             if (devices.length === 0) {
+                this.logger.error(`No devices found!`);
                 throw Error('No devices found!');
             }
-            console.log('Devices:');
             devices.forEach((device, index) => {
-                console.log(
+                this.logger.log(
                     `Device ${index} - Name: '${device.name}', Serial Number: '${device.serial_number}'`
                 );
             });
@@ -42,17 +41,14 @@ export class MyQHandler {
                 throw Error('No doors found!');
             }
 
-            console.log(`\nGetting state of door '${door.name}'`);
+            this.logger.log(`Getting state of door '${door.name}'`);
             const getDoorStateResult = await account.getDoorState(door.serial_number);
-            console.log('getDoorState result:');
-            console.log(JSON.stringify(getDoorStateResult, null, 2));
-            console.log(`State of door '${door.name}': ${getDoorStateResult.deviceState}`);
+            this.logger.log(`State of door '${door.name}': ${getDoorStateResult.deviceState}`);
             return getDoorStateResult.deviceState;
         } catch (error) {
-            console.error('Error received:');
-            console.error(error);
-            console.error(`Error code: ${error.code}`);
-            console.error(`Error message: ${error.message}`);
+            this.logger.error(error);
+            this.logger.error(`Error code: ${error.code}`);
+            this.logger.error(`Error message: ${error.message}`);
 
             throw new InternalServerErrorException();
         }
@@ -62,27 +58,20 @@ export class MyQHandler {
         const account = new MyQ();
 
         try {
-            console.log('Logging in.');
+            this.logger.log('openDoor');
+            this.logger.log(`Log-in with a/c: ${EMAIL}`);
             const loginResult = await account.login(EMAIL, PASSWORD);
-            console.log('Login result:');
-            console.log(JSON.stringify(loginResult, null, 2));
-            console.log(`Short-lived security token: '${loginResult.securityToken}'`);
+            this.logger.log(`Log-in Result: ${JSON.stringify(loginResult, null, 2)}`);
+            this.logger.log(`WT Token: ${loginResult.securityToken}`);
 
-            console.log(`\nGetting all devices on account`);
+            this.logger.log(`Getting Devices List`);
             const getDevicesResult = await account.getDevices();
-            console.log('getDevices result:');
-            console.log(JSON.stringify(getDevicesResult, null, 2));
+            // this.logger.log(`getDevices:  ${JSON.stringify(getDevicesResult, null, 2)}`);
 
             const { devices } = getDevicesResult;
             if (devices.length === 0) {
                 throw Error('No devices found!');
             }
-            console.log('Devices:');
-            devices.forEach((device, index) => {
-                console.log(
-                    `Device ${index} - Name: '${device.name}', Serial Number: '${device.serial_number}'`
-                );
-            });
 
             const door = devices.find(
                 (device) => device.state && MyQ.constants._stateAttributes.doorState in device.state
@@ -94,16 +83,14 @@ export class MyQHandler {
             const setDoorStateResult = await account.setDoorState(
                 door.serial_number,
                 MyQ.actions.door.OPEN
-              );
-              console.log('setDoorStateResult:');
-              console.log(JSON.stringify(setDoorStateResult, null, 2));
+            );
+            this.logger.log(`setDoorStateResult: ${JSON.stringify(setDoorStateResult, null, 2)}`);
 
             return setDoorStateResult;
         } catch (error) {
-            console.error('Error received:');
-            console.error(error);
-            console.error(`Error code: ${error.code}`);
-            console.error(`Error message: ${error.message}`);
+            this.logger.error(error);
+            this.logger.error(`Error code: ${error.code}`);
+            this.logger.error(`Error message: ${error.message}`);
 
             throw new InternalServerErrorException();
         }
@@ -113,27 +100,20 @@ export class MyQHandler {
         const account = new MyQ();
 
         try {
-            console.log('Logging in.');
+            this.logger.log('closeDoor');
+            this.logger.log(`Log-in with a/c: ${EMAIL}`);
             const loginResult = await account.login(EMAIL, PASSWORD);
-            console.log('Login result:');
-            console.log(JSON.stringify(loginResult, null, 2));
-            console.log(`Short-lived security token: '${loginResult.securityToken}'`);
+            this.logger.log(`Log-in Result: ${JSON.stringify(loginResult, null, 2)}`);
+            this.logger.log(`WT Token: ${loginResult.securityToken}`);
 
-            console.log(`\nGetting all devices on account`);
+            this.logger.log(`Getting Devices List`);
             const getDevicesResult = await account.getDevices();
-            console.log('getDevices result:');
-            console.log(JSON.stringify(getDevicesResult, null, 2));
+            // this.logger.log(`getDevices:  ${JSON.stringify(getDevicesResult, null, 2)}`);
 
             const { devices } = getDevicesResult;
             if (devices.length === 0) {
                 throw Error('No devices found!');
             }
-            console.log('Devices:');
-            devices.forEach((device, index) => {
-                console.log(
-                    `Device ${index} - Name: '${device.name}', Serial Number: '${device.serial_number}'`
-                );
-            });
 
             const door = devices.find(
                 (device) => device.state && MyQ.constants._stateAttributes.doorState in device.state
@@ -145,16 +125,14 @@ export class MyQHandler {
             const setDoorStateResult = await account.setDoorState(
                 door.serial_number,
                 MyQ.actions.door.CLOSE
-              );
-              console.log('setDoorStateResult:');
-              console.log(JSON.stringify(setDoorStateResult, null, 2));
+            );
+            this.logger.log(`setDoorStateResult: ${JSON.stringify(setDoorStateResult, null, 2)}`);
 
             return setDoorStateResult;
         } catch (error) {
-            console.error('Error received:');
-            console.error(error);
-            console.error(`Error code: ${error.code}`);
-            console.error(`Error message: ${error.message}`);
+            this.logger.error(error);
+            this.logger.error(`Error code: ${error.code}`);
+            this.logger.error(`Error message: ${error.message}`);
 
             throw new InternalServerErrorException();
         }

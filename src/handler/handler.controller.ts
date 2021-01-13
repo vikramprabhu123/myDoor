@@ -1,30 +1,31 @@
-import { Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Controller, Get, Logger, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { HandlerService } from './handler.service';
 
 @Controller('handler')
 export class HandlerController {
 
+    private logger = new Logger('HandlerController');
     constructor(private handlerService: HandlerService){}
     
     @Get()
     @UseGuards(AuthGuard())
     getStatus(){
-        console.log("--getStatus checking--");
+        this.logger.log('getStatus');
         return this.handlerService.getStatus();
     }
 
     @Post('/open')
     @UseGuards(AuthGuard())
     openDoor(){
-        console.log("--openDoor--");
+        this.logger.log('openDoor');
         return this.handlerService.openDoor();
    } 
 
    @Post('/close')
    @UseGuards(AuthGuard())
    closeDoor(){
-       console.log("--closeDoor--");
-       return this.handlerService.closeDoor();
+    this.logger.log('closeDoor');
+    return this.handlerService.closeDoor();
   } 
 }
